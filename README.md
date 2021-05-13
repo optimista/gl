@@ -1,5 +1,5 @@
 # `gl` script 
-Script for creation and removal of Gitlab repositories directly from terminal.
+Script for creation and removal of Gitlab repositories directly from terminal.  
 The script does check for existence of Vercel project and guides you through connecting it with repo.
 
 ## Prerequisites
