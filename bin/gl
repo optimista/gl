@@ -1,0 +1,39 @@
+#!/bin/zsh
+
+function getid() {
+  sed -n '1s/id: //p'
+}
+
+case $1 in
+  rm)
+    name="$2"
+
+    projectid=$( gitlab project list --owned True --search $name | getid )
+    gitlab project delete --id=$projectid 
+    echo "Project successfully removed from your GitLab account"
+    
+    rm -rf $name/.git
+    ;;
+  *)
+
+    name="$1"
+    namespace="$( gitlab current-user get | sed -n '1s/username: //p' )"
+    namespaceid="$( gitlab namespace list --search $namespace | getid )"
+    
+    cd $name
+    gitlab project create --name=$name --namespace-id=$namespaceid &>/dev/null
+    git init
+    git remote add origin git@gitlab.com:$namespace/$name.git
+    git add .
+    git commit -m "Initial Commit"
+    git push -u origin master
+
+    if [ -d ".vercel" ]; then
+      url="https://vercel.com/$( vercel whoami )/$name/settings/git"
+      echo
+      echo "To finish gitlab integration go to your browser to newly opened link $url, click on Gitlab button under 'Connected Git Repository', choose your namespace '$namespace' and connect your repository with the project"
+      open $url
+      echo
+    fi
+    ;;
+esac
