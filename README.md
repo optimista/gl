@@ -4,8 +4,8 @@ The script does check for existence of Vercel project and guides you through con
 
 ## Usage
 ```
-gl myreponame# To generate a new project
-gl rm myreponame# To remove existing project (must be run from parent directory)
+gl myreponame # To generate a new project
+gl rm myreponame # To remove existing project (run from parent directory)
 ```
 
 ## Prerequisites
