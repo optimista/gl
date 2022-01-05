@@ -24,9 +24,10 @@ case $1 in
     gitlab project create --name=$name --namespace-id=$namespaceid &>/dev/null
     git init
     git remote add origin git@gitlab.com:$namespace/$name.git
+    git branch -M main
     git add .
     git commit -m "Initial Commit"
-    git push -u origin master
+    git push -uf origin main 
 
     if [ -d ".vercel" ]; then
       url="https://vercel.com/$( vercel whoami )/$name/settings/git"
